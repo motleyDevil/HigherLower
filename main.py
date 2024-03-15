@@ -7,6 +7,8 @@ object_a = {}
 object_b = {}
 guess = str()
 higher = str()
+current_score = 0
+
 
 def get_object_new():
     random_item_one = random.choice(game_data.data)
@@ -28,6 +30,13 @@ def assign_object_b():
     object_b["country"] = object_new["country"]
     object_b["followers"] = object_new["followers"]
     object_b["description"] = object_new["description"]
+
+
+def reassign_object_a():
+    object_a["name"] = object_b["name"]
+    object_a["description"] = object_b["description"]
+    object_a["country"] = object_b["country"]
+    object_a["followers"] = object_b["followers"]
 
 
 def game_setup():
@@ -56,28 +65,37 @@ def compare():
         higher = "a"
     elif followers_a < followers_b:
         higher = "b"
-    return higher
 
-
-def compare_guess(guess, higher):
     if guess == higher:
         correct()
     elif guess != higher:
         end_game()
 
 
-def correct():
+
+def correct(current_score):
+    current_score += 1
     print("Correct!")
+    print(f"Your score is {current_score}.")
+    if higher == "b":
+        reassign_object_a()
+    continue_playing = 1
+    return current_score
 
 
 def end_game():
     print("Sorry, that's incorrect.")
+    continue_playing = 2
 
+#####
 
 game_setup()
-game_start()
-compare()
-compare_guess(guess, higher)
+continue_playing = 1
+
+while continue_playing == 1:
+    current_score = int()
+    game_start()
+    compare()
 
 
 # print(art.logo)
